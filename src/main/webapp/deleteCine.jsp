@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Borrar Cine</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -17,13 +17,10 @@
 Cinema c = null;
 	try{
 		 c = CineRepository.getCinema(request.getParameter("cine"));
-		 CineRepository.deleteCinema(c);
+		 
+		%>
 		
-	}catch (Exception e){
-		
-	}
-%>
-<form>
+		<form>
   <div class="form-group row">
     <label for="text" class="col-4 col-form-label">Cine</label> 
     <div class="col-8">
@@ -33,20 +30,20 @@ Cinema c = null;
             <i class="fa fa-address-card"></i>
           </div>
         </div> 
-        <input id="cine" name="cine" type="text" class="form-control" value='<%=c.getCiudadCine()%>'>
+        <input id="cine" name="cine" type="text" class="form-control" value='<%=c.getCine()%>' readonly>
       </div>
     </div>
   </div>
   <div class="form-group row">
     <label for="text1" class="col-4 col-form-label">Ciudad</label> 
     <div class="col-8">
-      <input id="text1" name="ciudad" type="text" class="form-control">
+      <input id="text1" name="ciudad" type="text" class="form-control" value='<%=c.getCine()%>' readonly>
     </div>
   </div>
   <div class="form-group row">
     <label for="text2" class="col-4 col-form-label">Direccion</label> 
     <div class="col-8">
-      <input id="text2" name="direccion" type="text" class="form-control">
+      <input id="text2" name="direccion" type="text" class="form-control" value='<%=c.getDireccion_cine()%>' readonly>
     </div>
   </div> 
   <div class="form-group row">
@@ -55,5 +52,16 @@ Cinema c = null;
     </div>
   </div>
 </form>
+
+<% 
+	}catch (Exception e){
+		out.println("error");
+	}
+	if(request.getParameter("submit") != null){
+		CineRepository.deleteCinema(request.getParameter("cine"));
+		response.sendRedirect("listarCinema.jsp");
+	}
+%>
+
 </body>
 </html>

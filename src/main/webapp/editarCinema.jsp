@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Editar Cine</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -55,11 +55,12 @@ Cinema c = null;
 </form>
 		<% 
 	}catch (Exception e){
-		
+		out.println("error");
 	}
 	if(request.getParameter("submit") != null){
 		Cinema ci = new Cinema(request.getParameter("cine"), request.getParameter("ciudad"), request.getParameter("direccion"));
-		CineRepository.annadirCine(ci);
+		CineRepository.editCine(ci);
+		response.sendRedirect("listarCinema.jsp");
 	}
 	
 %>

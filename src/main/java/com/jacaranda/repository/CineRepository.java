@@ -54,18 +54,23 @@ public class CineRepository {
 		return r;
 	}
 	
-	public static void deleteCinema(Cinema c) {
+	public static void deleteCinema(String cine) {
 		Cinema result = null;
+		Transaction transaction = null;
 		Session session = BdUtil.getSessionFactory().openSession();
+		
 		
 		SelectionQuery<Cinema> q =
 				session.createSelectionQuery("From Cinema where cinema = :cinema", Cinema.class);
-				q.setParameter("cinema", c);
+				q.setParameter("cinema", cine);
 				List<Cinema> cinemas = q.getResultList();
 				if(cinemas.size() != 0) {
+					transaction = (Transaction) session.beginTransaction();
 					result = cinemas.get(0);
+					session.remove(result);
+					transaction.commit();
+					session.close();
 				}
-				session.remove(result);
 				
 	}
 	
@@ -88,9 +93,3 @@ public class CineRepository {
 		
 }
 }
-
-	
-	
-	
-	
-	

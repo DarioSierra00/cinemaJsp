@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Listado Cine</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -37,16 +37,15 @@
 				<td><%=c.getCiudadCine() %></td>
 				<td><form action="./editarCinema.jsp">
 					<input type="text" name="cine" value='<%=c.getCine() %>' hidden>
-					<button type="submit">Editar</button>
+					<button type="submit">Edit</button>
 				</form>
 				</td>
 				<td>
 				<form action="./deleteCine.jsp">
 				<input type="text" name="cine" value='<%=c.getCine() %>' hidden>
-				<button type="submit">Borrar</button>		
+				<button type="submit">Delete</button>		
 				</form>
 				</td>
-				
 			</tr>
 		
 	<% }%>

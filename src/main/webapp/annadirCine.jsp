@@ -16,7 +16,7 @@
 <% //Intento ver si ha puesto los datos para añadir un Cine
 	try{
 		Cinema c = new Cinema(request.getParameter("cine"), request.getParameter("ciudad"), request.getParameter("direccion"));
-		CineRepository.annadirCine(c);	
+		CineRepository.annadirCine(c);
 	}catch (Exception e){
 		
 	}

@@ -1,7 +1,10 @@
 package com.jacaranda.repository;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.SelectionQuery;
 
 import com.jacaranda.model.Cinema;
 import com.jacaranda.util.BdUtil;
@@ -18,52 +21,76 @@ public class CineRepository {
 		Session session = BdUtil.getSessionFactory().openSession();
 		transaction = (Transaction) session.beginTransaction();
 		try {
-			session.save(c);
+			session.merge(c);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 		}
+		
 		session.close();
-		
-		
 	}
+
 		return result;
 }
 	
-	public static void deleteCInema(Cinema c) {
-		Transaction transaction = null;
-	
-		if(c.getCine() != null) {
-			Session session = BdUtil.getSessionFactory().openSession();
-			transaction = (Transaction) session.beginTransaction();
-			try {
-				session.remove(c);;
-				transaction.commit();
-			} catch (Exception e) {
-				transaction.rollback();
-			}
-			session.close();
+	public static Cinema getCinema(String cine) {
+		Cinema result = null;
+		Session session = BdUtil.getSessionFactory().openSession();
+		
+		SelectionQuery<Cinema> q =
+				session.createSelectionQuery("From Cinema where cinema = :cinema", Cinema.class);
+				q.setParameter("cinema", cine);
+				List<Cinema> cinemas = q.getResultList();
+				if(cinemas.size() != 0) {
+					result = cinemas.get(0);
+				}
+				return result;
 	}
-}
-	/*
-	public static Cinema edit(Cinema c) {
+
+	public static List<Cinema> getCinemas(){
+		Session session = BdUtil.getSessionFactory().openSession();
+		List <Cinema> r = (List<Cinema>) session.createSelectionQuery( "From Cinema" ).getResultList();
+		
+		return r;
+	}
+	
+	public static void deleteCinema(Cinema c) {
+		Cinema result = null;
+		Session session = BdUtil.getSessionFactory().openSession();
+		
+		SelectionQuery<Cinema> q =
+				session.createSelectionQuery("From Cinema where cinema = :cinema", Cinema.class);
+				q.setParameter("cinema", c);
+				List<Cinema> cinemas = q.getResultList();
+				if(cinemas.size() != 0) {
+					result = cinemas.get(0);
+				}
+				session.remove(result);
+				
+	}
+	
+	public static void editCine(Cinema c) throws IllegalStateException, SystemException {
 		Transaction transaction = null;
 		
 		if(c.getCine() != null) {
-			Session session = BdUtil.getSessionFactory().openSession();
-			transaction = (Transaction) session.beginTransaction();
-			try {
-				session.;
-				transaction.commit();
-			} catch (Exception e) {
-				transaction.rollback();
-			}
-			session.close();
+		Session session = BdUtil.getSessionFactory().openSession();
+		transaction = (Transaction) session.beginTransaction();
+		try {
+			session.merge(c);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		
+		session.close();
 	}
-	
-	*/
-	
-	
-	
-	
+
+		
 }
+}
+
+	
+	
+	
+	
+	

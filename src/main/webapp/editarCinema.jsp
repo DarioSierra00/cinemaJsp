@@ -15,15 +15,13 @@
 
 <% //Intento ver si ha puesto los datos para añadir un Cine
 Cinema c = null;
+
 	try{
-		 c = CineRepository.getCinema(request.getParameter("cine"));
-		 CineRepository.deleteCinema(c);
+		c = CineRepository.getCinema(request.getParameter("cine"));
 		
-	}catch (Exception e){
 		
-	}
-%>
-<form>
+		%>
+		<form>
   <div class="form-group row">
     <label for="text" class="col-4 col-form-label">Cine</label> 
     <div class="col-8">
@@ -33,18 +31,18 @@ Cinema c = null;
             <i class="fa fa-address-card"></i>
           </div>
         </div> 
-        <input id="cine" name="cine" type="text" class="form-control" value='<%=c.getCiudadCine()%>'>
+        <input id="cine" name="cine" type="text" class="form-control" value = '<%=c.getCine()%>' readonly>
       </div>
     </div>
   </div>
   <div class="form-group row">
-    <label for="text1" class="col-4 col-form-label">Ciudad</label> 
+    <label for="text1" class="col-4 col-form-label" value='<%=c.getCiudadCine()%>'>Ciudad</label> 
     <div class="col-8">
       <input id="text1" name="ciudad" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row">
-    <label for="text2" class="col-4 col-form-label">Direccion</label> 
+    <label for="text2" class="col-4 col-form-label" value='<%=c.getDireccion_cine()%>'>Direccion</label> 
     <div class="col-8">
       <input id="text2" name="direccion" type="text" class="form-control">
     </div>
@@ -55,5 +53,16 @@ Cinema c = null;
     </div>
   </div>
 </form>
+		<% 
+	}catch (Exception e){
+		
+	}
+	if(request.getParameter("submit") != null){
+		Cinema ci = new Cinema(request.getParameter("cine"), request.getParameter("ciudad"), request.getParameter("direccion"));
+		CineRepository.annadirCine(ci);
+	}
+	
+%>
+
 </body>
 </html>
